@@ -15,8 +15,10 @@ AMovingPlatform::AMovingPlatform()
 void AMovingPlatform::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("Hello World"));
+	//UE_LOG(LogTemp, Warning, TEXT("Connection TEST"));
 	
+	MyVector = FVector(-15240, -2350, 4056);
+	SetActorLocation(MyVector);
 }
 
 // Called every frame
