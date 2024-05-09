@@ -20,6 +20,7 @@ void AMovingPlatform::BeginPlay()
 }
 
 // Called every frame
+// 한글주석이 안된다고?
 void AMovingPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -30,5 +31,6 @@ void AMovingPlatform::Tick(float DeltaTime)
 
 	MyVector.Y += 1;
 	SetActorLocation(LocalVector);
+	//SetActorLocation(MyVector);
 }
 
