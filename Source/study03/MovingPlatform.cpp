@@ -17,8 +17,6 @@ void AMovingPlatform::BeginPlay()
 	Super::BeginPlay();
 	//UE_LOG(LogTemp, Warning, TEXT("Connection TEST"));
 	
-	MyVector = FVector(-15240, -2350, 4056);
-	SetActorLocation(MyVector);
 }
 
 // Called every frame
@@ -26,5 +24,7 @@ void AMovingPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	MyVector.Y = MyVector.Y + 1;
+	SetActorLocation(MyVector);
 }
 
