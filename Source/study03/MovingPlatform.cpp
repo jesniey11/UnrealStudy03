@@ -20,7 +20,7 @@ void AMovingPlatform::BeginPlay()
 }
 
 // Called every frame
-// �ѱ��ּ��� �ȵȴٰ�?
+// 한글주석이 안된다고? 한글한글한글
 void AMovingPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
