@@ -16,7 +16,8 @@ void AMovingPlatform::BeginPlay()
 {
 	Super::BeginPlay();
 	//UE_LOG(LogTemp, Warning, TEXT("Connection TEST"));
-	
+
+	StartLocation = GetActorLocation();
 }
 
 // Called every frame
@@ -25,19 +26,23 @@ void AMovingPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	// Move platform forwards
+	/* Move platform forwards */
 
 	// Get current location
 	FVector CurrentLocation = GetActorLocation();
 
 	// Add vector to that location
-	CurrentLocation.X += 2;
+	CurrentLocation += PlatformVelocity * DeltaTime;
 
 	// Set location
 	SetActorLocation(CurrentLocation);
 
-	// Send platform back if gone too far
+	/* Send platform back if gone too far */
 
+	// Check how far actor moved
+	DistanceMoved = FVector::Dist(StartLocation, CurrentLocation);
+	
+	// Reserve dir of motion if gone too far
 
 }
 
