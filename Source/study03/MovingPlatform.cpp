@@ -44,8 +44,11 @@ void AMovingPlatform::Tick(float DeltaTime)
 	// Reserve dir of motion if gone too far
 	if (CurrentDistance > MoveDistance)
 	{
+		FVector MoveDirection = PlatformVelocity.GetSafeNormal();
+		StartLocation = CurrentLocation + MoveDirection * MoveDistance;
+		SetActorLocation(StartLocation);
+
 		PlatformVelocity *= -1;
-		StartLocation = CurrentLocation;
 	}
 
 }
