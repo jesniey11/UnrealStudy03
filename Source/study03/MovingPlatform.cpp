@@ -27,7 +27,6 @@ void AMovingPlatform::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	/* Move platform forwards */
-
 	// Get current location
 	FVector CurrentLocation = GetActorLocation();
 
@@ -37,12 +36,17 @@ void AMovingPlatform::Tick(float DeltaTime)
 	// Set location
 	SetActorLocation(CurrentLocation);
 
-	/* Send platform back if gone too far */
 
+	/* Send platform back if gone too far */
 	// Check how far actor moved
-	DistanceMoved = FVector::Dist(StartLocation, CurrentLocation);
+	float CurrentDistance = FVector::Dist(StartLocation, CurrentLocation);
 	
 	// Reserve dir of motion if gone too far
+	if (CurrentDistance > MoveDistance)
+	{
+		PlatformVelocity *= -1;
+		StartLocation = CurrentLocation;
+	}
 
 }
 
