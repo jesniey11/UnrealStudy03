@@ -15,7 +15,6 @@ AMovingPlatform::AMovingPlatform()
 void AMovingPlatform::BeginPlay()
 {
 	Super::BeginPlay();
-	//UE_LOG(LogTemp, Warning, TEXT("Connection TEST"));
 
 	StartLocation = GetActorLocation();
 }
@@ -25,31 +24,42 @@ void AMovingPlatform::BeginPlay()
 void AMovingPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	/* Move platform forwards */
-	// Get current location
-	FVector CurrentLocation = GetActorLocation();
-
-	// Add vector to that location
-	CurrentLocation = CurrentLocation + PlatformVelocity * DeltaTime;
-
-	// Set location
-	SetActorLocation(CurrentLocation);
-
-
-	/* Send platform back if gone too far */
-	// Check how far actor moved
-	float CurrentDistance = FVector::Dist(StartLocation, CurrentLocation);
 	
-	// Reserve dir of motion if gone too far
-	if (CurrentDistance > MoveDistance)
-	{
-		FVector MoveDirection = PlatformVelocity.GetSafeNormal();
-		StartLocation = StartLocation + MoveDirection * MoveDistance;
-		SetActorLocation(StartLocation);
-
-		PlatformVelocity = -PlatformVelocity;
-	}
-
+	MovePlatform(DeltaTime);
+	RotatePlatform(DeltaTime);
 }
 
+void AMovingPlatform::MovePlatform(float DeltaTime)
+{
+	/* Move platform forwards */
+	FVector CurrentLocation = GetActorLocation();
+	CurrentLocation += PlatformVelocity * DeltaTime;
+	SetActorLocation(CurrentLocation);
+
+	/* Send platform back if gone too far */
+	if (ShouldPlatformReturn())
+	{
+		FVector MoveDirection = PlatformVelocity.GetSafeNormal();
+		StartLocation += MoveDirection * MoveDistance;
+		SetActorLocation(StartLocation);
+		PlatformVelocity = -PlatformVelocity;
+	}
+	else 
+	{
+		/* Move platform forwards */
+		FVector CurrentLocation = GetActorLocation();
+		CurrentLocation += PlatformVelocity * DeltaTime;
+		SetActorLocation(CurrentLocation);
+	}
+}
+
+void AMovingPlatform::RotatePlatform(float DeltaTime)
+{
+	UE_LOG(LogTemp, Display, TEXT("ROTATE"));
+}
+
+bool AMovingPlatform::ShouldPlatformReturn() 
+{
+	float CurrentDistance = FVector::Dist(StartLocation, GetActorLocation());
+	return CurrentDistance > MoveDistance;
+}
